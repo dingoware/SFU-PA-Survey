@@ -6,8 +6,7 @@ You can follow the same tutorial I used here: https://www.sqlitetutorial.net/sql
 */
 
 //required imports for SQLite
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class testprogram {
     public static void main(String[] args) {
