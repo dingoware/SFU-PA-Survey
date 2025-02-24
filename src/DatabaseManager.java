@@ -1,8 +1,6 @@
 package src;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:resources/database.db";
@@ -108,4 +106,35 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
+    public static void insertTestData() {
+        String insertCourseSQL = "INSERT OR IGNORE INTO course (code, name) VALUES (201, 'Data Structures'), (202, 'Database Systems');";
+        String insertSemesterSQL = "INSERT OR IGNORE INTO semester (id, name) VALUES (2, 'Spring 2025');";
+        String insertAYearSQL = "INSERT OR IGNORE INTO aYear (id, name) VALUES (2, '2025-2026');";
+        String insertGuestSQL = "INSERT OR IGNORE INTO guests (id, fname, lname) VALUES (2, 'Alice', 'Smith'), (3, 'Bob', 'Johnson');";
+        String insertCourseEvalSQL = "INSERT OR IGNORE INTO courseEval (id, courseId, semesterId, aYearId) VALUES (2, 201, 2, 2), (3, 202, 2, 2);";
+        String insertEvalQuestionSQL = "INSERT OR IGNORE INTO evalQuestions (id, question, type) VALUES (2, 'Was the course material well-organized?', 1), (3, 'Would you recommend this course?', 1);";
+        String insertGuestEvalSQL = "INSERT OR IGNORE INTO guestEval (id, guestId, courseId, semesterId, aYearId) VALUES (2, 2, 201, 2, 2), (3, 3, 202, 2, 2);";
+        String insertEvalAnswerSQL = "INSERT OR IGNORE INTO evalAnswers (guestEvalId, courseEvalId, evalQuestionId, answer) VALUES (2, 2, 2, 'Yes'), (3, 3, 3, 'No');";
+        String insertGradeSQL = "INSERT OR IGNORE INTO grades (id, studentId, courseId, semesterId, aYearId, grade, retake) VALUES (2, 2, 201, 2, 2, 'B+', 0), (3, 3, 202, 2, 2, 'A-', 1);";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(insertCourseSQL);
+            stmt.execute(insertSemesterSQL);
+            stmt.execute(insertAYearSQL);
+            stmt.execute(insertGuestSQL);
+            stmt.execute(insertCourseEvalSQL);
+            stmt.execute(insertEvalQuestionSQL);
+            stmt.execute(insertGuestEvalSQL);
+            stmt.execute(insertEvalAnswerSQL);
+            stmt.execute(insertGradeSQL);
+
+            System.out.println("New test data inserted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
