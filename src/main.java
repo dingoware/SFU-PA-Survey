@@ -1,9 +1,8 @@
 package src;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
         DatabaseManager.initializeDatabase();
-        GUI app = new GUI();
-        app.show();
+
     }
 }
