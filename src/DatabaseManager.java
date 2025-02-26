@@ -5,7 +5,10 @@ import java.sql.*;
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:resources/database.db";
 
+    // Initializes the database with tables
     public static void initializeDatabase() {
+
+        //Creates a table through a "String"
         String createCourseTableSQL =
                 "CREATE TABLE IF NOT EXISTS course (" +
                         "code INTEGER PRIMARY KEY," +
@@ -88,8 +91,8 @@ public class DatabaseManager {
                         "FOREIGN KEY (aYearId) REFERENCES aYear(id)" +
                         ");";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = DriverManager.getConnection(DB_URL); //Connects to the SQLite database
+             Statement stmt = conn.createStatement()) { //SQL statement to the connected database
             // Execute all the SQL statements to create the tables
             stmt.execute(createCourseTableSQL);
             stmt.execute(createSemesterTableSQL);
@@ -109,8 +112,8 @@ public class DatabaseManager {
 
     public static void insertTestData(String table, String columns, String values) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
-            stmt.execute("INSERT OR IGNORE INTO " + table + " (" + columns + ") VALUES (" + values + ");");
+             Statement stmt = conn.createStatement()) { // Connects to the SQLite database and creates a Statement variable
+            stmt.execute("INSERT OR IGNORE INTO " + table + " (" + columns + ") VALUES (" + values + ");"); // Executes the statement with the given values
             System.out.println("Data inserted into " + table + ".");
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,8 +123,11 @@ public class DatabaseManager {
     public static void selectData(String table) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM " + table)) {
-            while (rs.next()) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM " + table)) { // Connects to the SQLite database, creates a statement variable, and SELECTs all from specific table
+
+            System.out.println("DATA: ");
+
+            while (rs.next()) { // Loop to continue printing ALL table data
                 System.out.println(rs.getString(1) + " | " + rs.getString(2));
             }
         } catch (Exception e) {
@@ -131,8 +137,8 @@ public class DatabaseManager {
 
     public static void updateData(String table, String column, String newValue, String condition) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
-            stmt.execute("UPDATE " + table + " SET " + column + " = '" + newValue + "' WHERE " + condition);
+             Statement stmt = conn.createStatement()) { // Connects to the SQLite database and creates a statement variable
+            stmt.execute("UPDATE " + table + " SET " + column + " = '" + newValue + "' WHERE " + condition); // Executes the statement
             System.out.println("Data updated");
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,8 +147,8 @@ public class DatabaseManager {
 
     public static void deleteData(String table, String condition) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
-            stmt.execute("DELETE FROM " + table + " WHERE " + condition);
+             Statement stmt = conn.createStatement()) { // Connects to the SQLite database and creates a statement variable
+            stmt.execute("DELETE FROM " + table + " WHERE " + condition); // Executes the statement given from the variable
             System.out.println("Data deleted");
         } catch (Exception e) {
             e.printStackTrace();
