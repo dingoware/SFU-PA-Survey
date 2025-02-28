@@ -1,5 +1,8 @@
 package src;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         DatabaseManager.initializeDatabase();
@@ -9,10 +12,18 @@ public class Main {
         * UNCOMMENT ONE-BY-ONE TO TEST EACH OPERATION!!
         */
 
-        //DatabaseManager.insertTestData("course", "code, name", "206, 'Software Craftsmanship'");
-        DatabaseManager.selectData("course", "code, name");
-        //DatabaseManager.updateData("course", "name", "Advanced Software Engineering", "code = 205");
-        //DatabaseManager.deleteData("guests", "id = 3");
+        //CREATE
+        //DatabaseManager.insertTestData("course", "code, name", "390, 'Advanced Java Programming'");
+
+        //READ
+        //List<List<String>> courses = DatabaseManager.selectData("course", "code, name");
+        //System.out.println(courses);
+
+        //UPDATE
+        //DatabaseManager.updateData("course", "name", "Advanced Java Programming 2", "code = 390");
+
+        //DELETE
+        //DatabaseManager.deleteData("course", "code = 390");
 
         GUI app = new GUI();
         app.show();

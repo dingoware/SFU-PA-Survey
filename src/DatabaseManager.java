@@ -1,6 +1,8 @@
 package src;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:resources/database.db";
@@ -120,23 +122,24 @@ public class DatabaseManager {
         }
     }
 
-    public static void selectData(String table, String columns) {
+    public static List<List<String>> selectData(String table, String columns) {
+        List<List<String>> results = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT " + columns + " FROM " + table)) {
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-
             while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    System.out.print(rs.getString(i) + " | ");
+                List<String> row = new ArrayList<>();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    row.add(rs.getString(i));
                 }
-                System.out.println();
+                results.add(row);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return results;
     }
+
     public static void updateData(String table, String column, String newValue, String condition) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) { // Connects to the SQLite database and creates a statement variable
