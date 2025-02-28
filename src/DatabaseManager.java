@@ -120,21 +120,23 @@ public class DatabaseManager {
         }
     }
 
-    public static void selectData(String table) {
+    public static void selectData(String table, String columns) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM " + table)) { // Connects to the SQLite database, creates a statement variable, and SELECTs all from specific table
+             ResultSet rs = stmt.executeQuery("SELECT " + columns + " FROM " + table)) {
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
 
-            System.out.println("DATA: ");
-
-            while (rs.next()) { // Loop to continue printing ALL table data
-                System.out.println(rs.getString(1) + " | " + rs.getString(2));
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    System.out.print(rs.getString(i) + " | ");
+                }
+                System.out.println();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     public static void updateData(String table, String column, String newValue, String condition) {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) { // Connects to the SQLite database and creates a statement variable

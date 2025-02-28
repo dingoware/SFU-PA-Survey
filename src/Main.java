@@ -10,7 +10,7 @@ public class Main {
         */
 
         //DatabaseManager.insertTestData("course", "code, name", "206, 'Software Craftsmanship'");
-        //DatabaseManager.selectData("evalQuestions");
+        DatabaseManager.selectData("course", "code, name");
         //DatabaseManager.updateData("course", "name", "Advanced Software Engineering", "code = 205");
         //DatabaseManager.deleteData("guests", "id = 3");
 
