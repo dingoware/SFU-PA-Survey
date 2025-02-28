@@ -123,16 +123,16 @@ public class DatabaseManager {
     }
 
     public static List<List<String>> selectData(String table, String columns) {
-        List<List<String>> results = new ArrayList<>();
+        List<List<String>> results = new ArrayList<>(); // Creates a nwe array list
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT " + columns + " FROM " + table)) {
-            while (rs.next()) {
-                List<String> row = new ArrayList<>();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs.getString(i));
+             ResultSet rs = stmt.executeQuery("SELECT " + columns + " FROM " + table)) { // Connects to the DB and gets what the user wants
+            while (rs.next()) { // While there is SELECT data...
+                List<String> row = new ArrayList<>(); // Creates a list for each row
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) { // Continues to go through rows
+                    row.add(rs.getString(i)); // Gets the data and puts it into its own list in the list
                 }
-                results.add(row);
+                results.add(row); // Adds it to the initial (main) list
             }
         } catch (Exception e) {
             e.printStackTrace();

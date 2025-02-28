@@ -15,9 +15,9 @@ public class Main {
         //CREATE
         //DatabaseManager.insertTestData("course", "code, name", "390, 'Advanced Java Programming'");
 
-        //READ
-        //List<List<String>> courses = DatabaseManager.selectData("course", "code, name");
-        //System.out.println(courses);
+        //READ (saves the data into an array list)
+        List<List<String>> guests = DatabaseManager.selectData("guests", "id, fname, lname");
+        System.out.println(guests);
 
         //UPDATE
         //DatabaseManager.updateData("course", "name", "Advanced Java Programming 2", "code = 390");
